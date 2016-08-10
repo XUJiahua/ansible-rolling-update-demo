@@ -1,0 +1,22 @@
+# make sure install jdk
+---
+- hosts: vagrants
+  remote_user: vagrant
+  vars:
+    guest_name: john
+  tasks:
+  - name: test connection
+    ping:
+  - name: vm only fix apt-get update issue
+    shell: sed -i 's/http/ftp/g' /etc/apt/sources.list
+    become: yes
+    become_method: sudo
+  - name: apt-get update
+    apt: update_cache=yes cache_valid_time=3600
+    # apt: name=openjdk-7-jre state=latest install_recommends=no
+    become: yes
+    become_method: sudo
+  - name: make sure jre installed
+    apt: name=openjdk-7-jre state=latest install_recommends=no
+    become: yes
+    become_method: sudo
