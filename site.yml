@@ -1,44 +1,11 @@
 ---
 - hosts: vagrants
   remote_user: vagrant
+  roles:
+  - logstash
   vars:
     guest_name: john
   tasks:
   - name: test connection
     ping:
-  - name: echo java version
-    command: java -version
-    register: java_version
-    ignore_errors: True
-  - debug: msg="{{java_version}}"
-  # fix apt-get issue on virtualbox
-  - name: vm only fix
-    copy: src=vb_fix/sources.list dest=/etc/apt/sources.list owner=root group=root mode=644 backup=yes
-    become: yes
-    become_method: sudo
-  - name: logstash apt-key
-    apt_key: url=https://packages.elastic.co/GPG-KEY-elasticsearch state=present
-    become: yes
-    become_method: sudo
-  - name: logstash update apt sources.list
-    apt_repository: repo="deb https://packages.elastic.co/logstash/2.3/debian stable main" state=present
-    become: yes
-    become_method: sudo
-  - name: apt-get update
-    apt: update_cache=yes cache_valid_time=3600
-    become: yes
-    become_method: sudo
-  - name: make sure jre installed
-    apt: name=openjdk-7-jre state=latest install_recommends=no
-    become: yes
-    become_method: sudo
-  - name: make sure logstash installed
-    apt: name=logstash state=latest install_recommends=no
-    become: yes
-    become_method: sudo
-  - name: make sure logstash running
-    # no conf in /etc/logstash/conf.d, logstash will stop
-    # TODO: copy logstash conf
-    service: name=logstash state=started
-    become: yes
-    become_method: sudo
+  
