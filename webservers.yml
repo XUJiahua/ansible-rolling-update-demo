@@ -8,4 +8,4 @@
   tasks:
   - name: test connection
     ping:
-  
+  - debug: msg="{{ansible_os_family}}"
