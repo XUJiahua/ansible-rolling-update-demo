@@ -6,7 +6,7 @@
 
 ### install jre, logstash by apt-get
 
-`ansible-playbook site.yml`
+`ansible-playbook -i hosts webservers.yml`
 
 ## logstash confs
 
