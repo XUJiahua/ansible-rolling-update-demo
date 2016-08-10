@@ -1,3 +1,15 @@
+## environment setup
+
+### [optional] use vagrant to simulate if there's no servers
+
+`vagrant up`
+
+### install jre, logstash by apt-get
+
+`ansible-playbook site.yml`
+
+## logstash confs
+
 access_log /var/log/nginx/access.log;
 error_log /var/log/nginx/error.log;
 
