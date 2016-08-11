@@ -1,8 +1,10 @@
 ---
-- hosts: webservers
+- hosts: nginx
   remote_user: vagrant
   become: yes
   become_method: sudo
+  vars_files:
+    - vars/nginx_vars.yml
   roles:
   - common
-  - logstash
+  - nginx

@@ -1,0 +1,8 @@
+---
+  - name: test connection
+    ping:
+  # fix apt-get issue on virtualbox
+  - name: vm only fix
+    copy: src=vb_fix/sources.list dest=/etc/apt/sources.list owner=root group=root mode=644 backup=yes
+  - name: apt-get update
+    apt: update_cache=yes cache_valid_time=3600
