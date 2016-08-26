@@ -14,10 +14,19 @@ Vagrant.configure(2) do |config|
   # boxes at https://atlas.hashicorp.com/search.
   config.vm.box = "ubuntu/trusty64"
 
-  (1..3).each do |i|
+  config.vm.define "nginxserver_vm" do |node|
+  end
+
+  (1..2).each do |i|
       config.vm.define "webserver_vm#{i}" do |node|
       end
   end
+
+  (1..3).each do |i|
+      config.vm.define "dbserver_vm#{i}" do |node|
+      end
+  end
+
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.

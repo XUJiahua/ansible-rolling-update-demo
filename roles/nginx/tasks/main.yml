@@ -1,8 +1,9 @@
 ---
+# if run as root, no need to change user/group
     - name: add group nginx
       group: name=nginx state=present
     - name: add user nginx
-      user: name=nginx group=nginx home=/usr/share/nginx createhome=no
+      user: name=nginx group=nginx home={{nginx_location}} createhome=no
     - name: download nginx
     # module unarchive has bug
       get_url: url=https://nginx.org/download/nginx-{{nginx_version}}.tar.gz dest=/opt/nginx-{{nginx_version}}.tar.gz
@@ -11,10 +12,13 @@
     - name: install dependencies for nginx
       apt: pkg=nginx state=build-dep
     - name: install nginx - configure
-      command: chdir=/opt/nginx-{{nginx_version}}/ ./configure --prefix=/usr/share/nginx --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_auth_request_module --with-http_stub_status_module --with-threads --with-stream --with-stream_ssl_module creates=/usr/share/nginx
+      command: chdir=/opt/nginx-{{nginx_version}}/ ./configure --prefix={{nginx_location}} --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_auth_request_module --with-http_stub_status_module --with-threads --with-stream --with-stream_ssl_module creates={{nginx_location}}
     - name: install nginx - make
-      command: chdir=/opt/nginx-{{nginx_version}}/ make creates=/usr/share/nginx
+      command: chdir=/opt/nginx-{{nginx_version}}/ make creates={{nginx_location}}
     - name: install nginx - make install
-      command: chdir=/opt/nginx-{{nginx_version}}/ make install creates=/usr/share/nginx
+      command: chdir=/opt/nginx-{{nginx_version}}/ make install creates={{nginx_location}}
     - name: change ownership of nginx installation
-      file: path=/usr/share/nginx/ owner=nginx group=nginx state=directory recurse=yes
+      file: path={{nginx_location}}/ owner=nginx group=nginx state=directory recurse=yes
+    # TODO: make nginx as a service
+    # - name: make sure nginx is started
+    #   command: chdir={{nginx_location}} sbin/nginx

@@ -6,5 +6,5 @@
   vars_files:
     - vars/nginx_vars.yml
   roles:
-  - common
-  - nginx
+  # - common
+  - ansible-role-nginx

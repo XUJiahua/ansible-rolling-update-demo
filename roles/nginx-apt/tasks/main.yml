@@ -1,0 +1,13 @@
+---
+  - name: nginx apt-key
+    apt_key: url=http://nginx.org/keys/nginx_signing.key state=present
+  - name: nginx apt_repository - 1
+    apt_repository: repo="deb http://nginx.org/packages/debian/ {{ubuntu_version}} nginx" state=present
+  - name: nginx apt_repository - 2
+    apt_repository: repo="deb-src http://nginx.org/packages/debian/ {{ubuntu_version}} nginx" state=present
+  - name: apt-get update
+    apt: update_cache=yes
+  - name: make sure nginx installed
+    apt: name=nginx state=latest install_recommends=no
+  - name: make sure nginx running
+    service: name=nginx state=started

@@ -1,2 +1,8 @@
 ---
+# setting for self compiled nginx
 nginx_version: 1.10.1
+nginx_location: /usr/share/nginx
+#nginx_location: /opt/nginx
+
+# setting for apt-get installed nginx
+ubuntu_version: trusty

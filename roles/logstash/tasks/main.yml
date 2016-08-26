@@ -1,8 +1,6 @@
 ---
   - name: logstash apt-key
     apt_key: url=https://packages.elastic.co/GPG-KEY-elasticsearch state=present
-    become: yes
-    become_method: sudo
   - name: logstash apt_repository
     apt_repository: repo="deb https://packages.elastic.co/logstash/2.3/debian stable main" state=present
   - name: apt-get update
@@ -11,7 +9,7 @@
     apt: name=openjdk-7-jre state=latest install_recommends=no
   - name: make sure logstash installed
     apt: name=logstash state=latest install_recommends=no
+  - name: copy logstash conf
+    copy: src=ls-for-mongo.conf dest=/etc/logstash/conf.d
   - name: make sure logstash running
-    # no conf in /etc/logstash/conf.d, logstash will stop
-    # TODO: copy logstash conf
     service: name=logstash state=started

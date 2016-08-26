@@ -1,12 +1,48 @@
+# Tutorial of asniable, vagrant
+架构：
+
+* 一个nginx作为load balancer
+* 两台web server，可作水平扩展
+* 三台db server，作为db集群
+* ［TODO］n台es server，作为日志集群
+
+```
+nginx -- webserver1 -- dbserver1
+	     webserver2    dbserver2
+                       dbserver3
+	|		|			|
+	|		|			|
+	esservers(elasticsearch)  
+
+```               
+
+需要安装的软件：
+
+* nginx：nginx, logstash
+* web server: logstash, go app
+* db server: logstash, mongodb
+* es server: elasticsearch, kibana
+
+ansible的目标：
+
+* 服务器配置
+* 滚动部署
+
+vm真的太麻烦了
+                       
 ## environment setup
 
 ### [optional] use vagrant to simulate if there's no servers
 
 `vagrant up`
 
-### install jre, logstash by apt-get
+### configure the servers
 
 `ansible-playbook -i hosts webservers.yml`
+
+`ansible-playbook -i hosts nginxserver.yml`
+
+`ansible-playbook -i hosts dbservers.yml`
 
 ## logstash confs
 

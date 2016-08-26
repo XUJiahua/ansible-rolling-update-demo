@@ -1,7 +1,0 @@
-[webservers]
-webserver_vm1 ansible_host=127.0.0.1 ansible_port=2222 ansible_user=vagrant ansible_ssh_pass=vagrant
-webserver_vm2 ansible_host=127.0.0.1 ansible_port=2200 ansible_user=vagrant ansible_ssh_pass=vagrant
-webserver_vm3 ansible_host=127.0.0.1 ansible_port=2201 ansible_user=vagrant ansible_ssh_pass=vagrant
-
-[nginx]
-webserver_vm3
