@@ -1,8 +1,8 @@
 ---
 - hosts: webservers
-  remote_user: vagrant
-  become: yes
-  become_method: sudo
+  #remote_user: vagrant
+  #become: yes
+  #become_method: sudo
   roles:
   # - common
   - logstash

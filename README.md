@@ -1,5 +1,5 @@
 # Tutorial of asniable, vagrant
-架构：
+## 架构：
 
 * 一个nginx作为load balancer
 * 两台web server，可作水平扩展
@@ -38,11 +38,21 @@ vm真的太麻烦了
 
 ### configure the servers
 
-`ansible-playbook -i hosts webservers.yml`
+```
+ansible-playbook -i hosts webservers.yml
 
-`ansible-playbook -i hosts nginxserver.yml`
+ansible-playbook -i hosts nginxserver.yml
 
-`ansible-playbook -i hosts dbservers.yml`
+ansible-playbook -i hosts dbservers.yml
+
+test conncection
+ansible -i hosts dbservers -m ping
+
+check status
+ansible -i hosts dbservers -m shell -a "service logstash status"
+
+
+```
 
 ## logstash confs
 
