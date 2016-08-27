@@ -1,0 +1,18 @@
+---
+  - name: upload app exe
+    copy: src=dist/nginx-demo dest=/home/john mode=0744
+  - name: upload scripts  
+    copy: src={{ item }} dest=/home/john mode=0744
+    with_fileglob: "dist/restart*"
+  - name: change ownership of app folder
+    file: path=/home/john owner=john group=john state=directory recurse=yes
+  - name: execute app1
+    shell: chdir=/home/john ./restart10000.sh
+    become: yes
+    become_user: john
+    when: "inventory_hostname == 'local_app1'"
+  - name: execute app2
+    shell: chdir=/home/john ./restart20000.sh
+    become: yes
+    become_user: john
+    when: "inventory_hostname == 'local_app2'"

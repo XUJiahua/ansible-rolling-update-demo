@@ -1,3 +1,4 @@
 .vagrant
 hosts
 conf
+hosts.testing

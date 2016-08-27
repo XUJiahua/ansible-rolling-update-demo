@@ -1,0 +1,46 @@
+# 1. remove nginx upstream on nginx server
+# 2. wait 1 min, deploy to web server
+# 3. add nginx upstream on nginx server
+
+---
+- hosts: webservers
+  remote_user: john
+  become: yes
+  become_method: sudo
+  serial: 1
+  pre_tasks:
+  - name: disable app1 server in nginx
+    file: src=/etc/nginx/conf.d/demo_app1.upstream dest=/etc/nginx/conf.d/demo_app.upstream state=link
+    delegate_to: "{{ item }}"
+    with_items: groups.nginxserver
+    when: "inventory_hostname == 'local_app1'"
+  - name: disable app2 server in nginx
+    file: src=/etc/nginx/conf.d/demo_app2.upstream dest=/etc/nginx/conf.d/demo_app.upstream state=link
+    delegate_to: "{{ item }}"
+    with_items: groups.nginxserver
+    when: "inventory_hostname == 'local_app2'"  
+  - name: reload nginx
+    service: name=nginx state=reloaded
+    delegate_to: "{{ item }}"
+    with_items: groups.nginxserver
+    when: "inventory_hostname == 'local_app1'"
+  - name: reload nginx
+    service: name=nginx state=reloaded
+    delegate_to: "{{ item }}"
+    with_items: groups.nginxserver
+    when: "inventory_hostname == 'local_app2'"  
+  - pause: prompt="service is removed from load balancer and please verify ..."  
+  roles:
+  - setup-app
+  tasks:
+  - pause: prompt="app deployment is done and please verify ..."
+  post_tasks:
+  - name: enable app server in nginx
+    file: src=/etc/nginx/conf.d/demo_apps.upstream dest=/etc/nginx/conf.d/demo_app.upstream state=link
+    delegate_to: "{{ item }}"
+    with_items: groups.nginxserver
+  - name: reload nginx
+    service: name=nginx state=reloaded
+    delegate_to: "{{ item }}"
+    with_items: groups.nginxserver  
+  - pause: prompt="service just joined load balancer and please verify ..."  

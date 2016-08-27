@@ -1,0 +1,14 @@
+---
+- hosts: webservers
+  remote_user: john
+  become: yes
+  become_method: sudo
+  roles:
+  - setup-app
+
+- hosts: nginxserver
+  remote_user: john
+  become: yes
+  become_method: sudo
+  roles:
+  - setup-nginx

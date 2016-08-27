@@ -1,0 +1,9 @@
+# setup nginx confs
+---
+  - name: copy nginx confs
+    copy: src={{ item }} dest=/etc/nginx/conf.d
+    with_fileglob: "conf/demo*"
+  - name: create soft link
+    file: src=/etc/nginx/conf.d/demo_apps.upstream dest=/etc/nginx/conf.d/demo_app.upstream state=link
+  - name: reload nginx
+    service: name=nginx state=reloaded
