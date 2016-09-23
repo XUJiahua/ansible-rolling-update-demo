@@ -1,8 +1,0 @@
----
-- hosts: dbservers
-  # strategy: free
-  #remote_user: john
-  #become: yes
-  #become_method: sudo
-  roles:
-  - logstash

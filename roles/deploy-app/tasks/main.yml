@@ -1,0 +1,4 @@
+---
+  - name: remove nginx upstream
+    copy: src={{ item }} dest=/etc/nginx/conf.d
+    with_fileglob: "conf/demo*"

@@ -1,0 +1,6 @@
+[webservers]
+local_app1 ansible_host=192.168.99.100 ansible_port=22 ansible_user=john ansible_ssh_pass=john
+local_app2 ansible_host=192.168.99.100 ansible_port=22 ansible_user=john ansible_ssh_pass=john
+
+[nginxserver]
+local_nginx ansible_host=192.168.99.100 ansible_port=22 ansible_user=john ansible_ssh_pass=john
